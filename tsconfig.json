@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": [
+      "esnext", "dom"
+    ],
+    "declaration": true,
+    "outDir": "./dist",
+    "removeComments": false,
+    "strict": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "types": [ "node", "chrome" ],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [ "src/**/*.ts" ],
+  "exclude": [ "node_modules" ]
+}

@@ -32,8 +32,8 @@ jobs:
       - name: Upload changelog
         uses: actions/upload-artifact@v2
         with:
-          name: latestChangeLog
-          path: latestChangeLog.md
+          name: latestChangelog
+          path: latestChangelog.md
 
   publish-release:
     needs: [ build-release ]
@@ -45,16 +45,16 @@ jobs:
         id: download-changelog
         uses: actions/download-artifact@v2
         with:
-          name: latestChangeLog
+          name: latestChangelog
 
       - name: Save changelog to env
         id: save-changelog
         run: |
-          latestChangeLog="$(cat ./latestChangeLog.md)"
-          latestChangeLog="${latestChangeLog//'%'/'%25'}"
-          latestChangeLog="${latestChangeLog//$'\n'/'%0A'}"
-          latestChangeLog="${latestChangeLog//$'\r'/'%0D'}"
-          echo "::set-output name=latestChangeLog::$latestChangeLog"
+          latestChangelog="$(cat ./latestChangelog.md)"
+          latestChangelog="${latestChangelog//'%'/'%25'}"
+          latestChangelog="${latestChangelog//$'\n'/'%0A'}"
+          latestChangelog="${latestChangelog//$'\r'/'%0D'}"
+          echo "::set-output name=latestChangelog::$latestChangelog"
 
       - name: Create Release
         id: create-release
@@ -64,7 +64,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: version ${{ github.ref }}
-          body: ${{ steps.save-changelog.outputs.latestChangeLog }}
+          body: ${{ steps.save-changelog.outputs.latestChangelog }}
           draft: false
           prerelease: false
 
@@ -72,7 +72,7 @@ jobs:
         id: download-release
         uses: actions/download-artifact@v2
         with:
-          name: releases
+          name: release
 
       - name: Upload Release Asset
         id: upload-release-asset

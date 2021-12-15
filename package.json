@@ -6,6 +6,7 @@
   "author": "yijie",
   "license": "MIT",
   "scripts": {
+    "changelog": "ts-node scripts/latestChangelog.ts",
     "zip:dist": "ts-node scripts/build.ts ./dist astromancer.zip",
     "start": "rimraf dist/* && cross-env NODE_ENV=dev webpack",
     "build": "rimraf dist/* && cross-env NODE_ENV=pro webpack && yarn zip:dist",

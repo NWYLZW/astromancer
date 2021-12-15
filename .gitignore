@@ -15,6 +15,7 @@ yarn-error.log
 package-lock.json
 tsconfig.tsbuildinfo
 report.*.json
+*.zip
 
 .eslintcache
 .DS_Store

@@ -2,9 +2,17 @@ import { Configuration } from 'webpack'
 
 import Extender from '@extender/builder-webpack'
 
-export default {
+const devConfig = {
   mode: 'development',
-  watch: true,
+  watch: true
+} as Configuration
+
+const proConfig = {
+  mode: 'production'
+} as Configuration
+
+export default {
+  ...(process.env.NODE_ENV === 'pro' ? proConfig : devConfig),
   entry: './src/index.ts?matches=https://github.com/*?tab=stars&runAt=document_start',
   module: {
     rules: [{

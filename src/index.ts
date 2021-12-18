@@ -26,7 +26,9 @@ document.querySelectorAll('div.Box > a.d-block.Box-row.Box-row--hover-gray.mt-0.
       event.preventDefault()
     })
     a.addEventListener('drop', async event => {
-      let { href } = curDraggedDiv?.querySelector('div.d-inline-block.mb-1 > h3 > a') as HTMLAnchorElement
+      if (!curDraggedDiv) return
+
+      let { href } = curDraggedDiv.querySelector('div.d-inline-block.mb-1 > h3 > a') as HTMLAnchorElement
       const formDiv = genElement(await fetch(`https://github.com${
         href.replace(`${location.protocol}//${location.host}`, '')
       }/lists`).then(r => r.text())) as HTMLDivElement
@@ -42,7 +44,7 @@ document.querySelectorAll('div.Box > a.d-block.Box-row.Box-row--hover-gray.mt-0.
         // console.log(label.innerText, input.checked)
       })
       // console.log(targetList.innerText, form)
-      document.body.appendChild(form)
+      curDraggedDiv.appendChild(form)
       await fetch(form.action, {
         method:'post',
         headers: {
@@ -50,7 +52,6 @@ document.querySelectorAll('div.Box > a.d-block.Box-row.Box-row--hover-gray.mt-0.
         },
         body: new FormData(form)
       })
-      document.body.removeChild(form)
     })
   })
 

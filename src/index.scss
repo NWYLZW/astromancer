@@ -1,23 +1,36 @@
+$r-panel-w: 160px;
 div.col-12.d-block.width-full.py-4.border-bottom.color-border-muted {
   position: relative;
   display: flex !important;
   float: left;
-  padding: 10px !important;
+  padding: 15px $r-panel-w 15px 15px !important;
+  margin-top: 20px;
   width: calc(50% - 10px) !important;
   height: 200px;
   cursor: move;
   border: 1px solid;
-  border-radius: 4px;
+  border-radius: 6px;
   flex-direction: column;
-  justify-content: space-around;
-  margin: {
-    top: 20px;
-    right: 5px;
-    left: 5px;
-  };
+  justify-content: space-between;
+  &:nth-child(2n) {
+    margin-right: 20px;
+  }
   > div.float-right {
     position: absolute;
-    top: 24px;
-    right: 10px;
+    top: 18px;
+    right: $r-panel-w;
+  }
+  > form.js-user-list-menu-form {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 0 10px;
+    width: 140px;
+  }
+}
+div.Layout {
+  grid-template-columns: 0 0 calc(100% - var(--Layout-gutter));
+  &-sidebar {
+    display: none;
   }
 }

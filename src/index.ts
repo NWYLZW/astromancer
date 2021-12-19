@@ -11,7 +11,7 @@ let curDraggedDiv: HTMLDivElement | null = null
 document.querySelectorAll('div.col-12.d-block.width-full.py-4.border-bottom.color-border-muted')
   .forEach(div => {
     div.setAttribute('draggable', 'true')
-    ;(<HTMLDivElement>div).addEventListener('dragover', event => {
+    ;(<HTMLDivElement>div).addEventListener('dragover', _ => {
       curDraggedDiv = <HTMLDivElement> div
     })
   })
@@ -25,10 +25,10 @@ document.querySelectorAll('div.Box > a.d-block.Box-row.Box-row--hover-gray.mt-0.
     a.addEventListener('dragenter', event => {
       event.preventDefault()
     })
-    a.addEventListener('drop', async event => {
+    a.addEventListener('drop', async _ => {
       if (!curDraggedDiv) return
 
-      let { href } = curDraggedDiv.querySelector('div.d-inline-block.mb-1 > h3 > a') as HTMLAnchorElement
+      const { href } = curDraggedDiv.querySelector('div.d-inline-block.mb-1 > h3 > a') as HTMLAnchorElement
       const formDiv = genElement(await fetch(`https://github.com${
         href.replace(`${location.protocol}//${location.host}`, '')
       }/lists`).then(r => r.text())) as HTMLDivElement

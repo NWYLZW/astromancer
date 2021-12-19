@@ -20,6 +20,7 @@ jobs:
           yarn
       - name: Build Release
         run: |
+          yarn lint
           yarn build
       - name: Upload release
         uses: actions/upload-artifact@v2

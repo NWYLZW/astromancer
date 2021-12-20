@@ -1,5 +1,15 @@
 import './index.scss'
 
+const sumData: number[] = []
+const recordData: {[key:string]:{[key:string]:boolean}} = {}
+
+document.querySelectorAll(
+  'div.Box > a.d-block.Box-row.Box-row--hover-gray.mt-0.color-fg-default.no-underline'
+).forEach((ele, index) => {
+  const a = <HTMLAnchorElement>ele
+  const num = a?.querySelector<HTMLDivElement>('div > div')?.innerText[0] || 0
+  sumData[index] = Number(num)!
+})
 interface RepoCardComp {
   form?: HTMLFormElement
 }
@@ -32,13 +42,17 @@ document.querySelectorAll<HTMLDivElement>('div.col-12.d-block.width-full.py-4.bo
     const form = await getRepoListForm(div)
     if (form) {
       ref.form = form
+      recordData[index] = {}
+      form.querySelectorAll<HTMLLabelElement>('label').forEach((label)=>{
+        recordData[index][label.querySelector<HTMLSpanElement>('span span')!.innerText] = label.querySelector<HTMLInputElement>('input')!.checked
+      })
       div.appendChild(form)
     }
     repoCardRefs[index] = ref
   })
 
 document.querySelectorAll('div.Box > a.d-block.Box-row.Box-row--hover-gray.mt-0.color-fg-default.no-underline')
-  .forEach(ele => {
+  .forEach((ele,index) => {
     const a = <HTMLAnchorElement>ele
     a.addEventListener('dragover', event => {
       event.preventDefault()
@@ -47,7 +61,8 @@ document.querySelectorAll('div.Box > a.d-block.Box-row.Box-row--hover-gray.mt-0.
       event.preventDefault()
     })
     a.addEventListener('drop', async _ => {
-      if (curDraggedDiv === -1)
+      const repoName = ele!.querySelector('h3')!.innerText
+      if (curDraggedDiv === -1 || recordData[curDraggedDiv][repoName])
         return
 
       const { form } = repoCardRefs[curDraggedDiv] || {}
@@ -71,6 +86,24 @@ document.querySelectorAll('div.Box > a.d-block.Box-row.Box-row--hover-gray.mt-0.
         },
         body: new FormData(form)
       })
+      if (sumData[index] == 0) {
+        const template = `<div class="d-flex flex-row flex-items-baseline flex-justify-between">
+            <h3 class="f4 text-bold no-wrap mr-3">${
+              repoName
+            }</h3>
+            <div class="color-fg-muted text-small no-wrap">1 repository</div>
+          </div>`
+        ele!.querySelector('h3')!.remove()
+        const tempNode = document.createElement('template')
+        tempNode.innerHTML = template
+        ele.appendChild(tempNode.content.firstChild!)
+      }
+      sumData[index] += 1
+      const repositoriesInnerText = ele.querySelector<HTMLDivElement>('div > div')!.innerText
+      const repositoriesInnerTextStrArr = repositoriesInnerText!.split(' ')
+      repositoriesInnerTextStrArr[0] = String(sumData[index])
+      a.querySelector<HTMLDivElement>('div > div')!.innerText =
+        repositoriesInnerTextStrArr.join(' ')
     })
   })
 

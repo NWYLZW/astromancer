@@ -3,7 +3,6 @@ import './index.scss'
 const sumData: number[] = []
 const recordData: {[key:string]:{[key:string]:boolean}} = {}
 
-
 document.querySelectorAll(
   'div.Box > a.d-block.Box-row.Box-row--hover-gray.mt-0.color-fg-default.no-underline'
 ).forEach((ele, index) => {

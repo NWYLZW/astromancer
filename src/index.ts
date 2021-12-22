@@ -1,4 +1,11 @@
 import './index.scss'
+import './appendStarglassesFilter'
+import { genElement } from './utils'
+
+interface RepoCardComp {
+  card: HTMLDivElement
+  form?: HTMLFormElement
+}
 
 const sumData: number[] = []
 const recordData: {[key:string]:{[key:string]:boolean}} = {}
@@ -10,17 +17,6 @@ document.querySelectorAll(
   const num = a?.querySelector<HTMLDivElement>('div > div')?.innerText[0] || 0
   sumData[index] = Number(num)!
 })
-interface RepoCardComp {
-  form?: HTMLFormElement
-}
-
-const genElement = <T = HTMLElement>(html: string): T => {
-  const template = document.createElement('div')
-  template.innerHTML = html
-  if (!template.firstChild)
-    throw new Error('Unable to create element from template')
-  return template.firstChild as any as T
-}
 
 const getRepoListForm = async (div: HTMLDivElement) => {
   const { href } = div.querySelector('div.d-inline-block.mb-1 > h3 > a') as HTMLAnchorElement
@@ -36,7 +32,9 @@ const repoCardRefs = [] as RepoCardComp[]
 
 document.querySelectorAll<HTMLDivElement>('div.col-12.d-block.width-full.py-4.border-bottom.color-border-muted')
   .forEach(async (div, index) => {
-    const ref = {} as RepoCardComp
+    const ref = {
+      card: div
+    } as RepoCardComp
     div.setAttribute('draggable', 'true')
     div.addEventListener('dragstart', _ => curDraggedDiv = index)
     const form = await getRepoListForm(div)

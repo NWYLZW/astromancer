@@ -17,12 +17,15 @@ export default {
   module: {
     rules: [{
       test: /\.scss$/i,
-      use: ["style-loader", "css-loader", "sass-loader"],
+      use: ['style-loader', 'css-loader', 'sass-loader']
     }, {
       test: /\.tsx?/,
       use: 'ts-loader',
-      exclude: /node_modules/,
+      exclude: /node_modules/
     }]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
   },
   plugins: [
     new Extender({ port: 18190 })

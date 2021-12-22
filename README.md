@@ -12,6 +12,14 @@
 
 这是一个在谷歌浏览器上运行的插件，用于快速管理你在 github 上面的 star ，项目使用 webpack 和 TypeScript 开发。
 
+## 详细信息
+
+* 全新的界面用来管理你的 star repositories
+* starglasses 选项可以让你更快的找到你需要管理的 star repositories
+* 使用拖动操作来管理你的 star repositories
+
+![demo](./001.gif)
+
 ## 如何使用
 
 * 从 [Releases](https://github.com/NWYLZW/astromancer/releases) 下载最新版本的压缩包
@@ -49,4 +57,5 @@
 ## 感谢
 
 * ~~我自己~~
+* 每一个 Star 了项目的用户
 * 项目图标来自[麻吉小猫](https://www.iconfont.cn/user/detail?uid=757066)

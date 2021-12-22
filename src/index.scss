@@ -1,20 +1,29 @@
 $r-panel-w: 160px;
+div.col-lg-12 {
+  position: relative;
+  display: grid;
+  padding-top: 98px;
+  grid-template-columns: repeat(2, calc(50% - 10px));
+  column-gap: 20px;
+  row-gap: 20px;
+  > div.position-relative {
+    position: absolute !important;
+    top: 0;
+    left: 16px;
+    width: calc(100% - 32px);
+  }
+}
 div.col-12.d-block.width-full.py-4.border-bottom.color-border-muted {
   position: relative;
   display: flex !important;
   float: left;
   padding: 15px $r-panel-w 15px 15px !important;
-  margin-top: 20px;
-  width: calc(50% - 10px) !important;
   height: 200px;
   cursor: move;
   border: 1px solid;
   border-radius: 6px;
   flex-direction: column;
   justify-content: space-between;
-  &:nth-child(2n) {
-    margin-right: 20px;
-  }
   > div.float-right {
     position: absolute;
     top: 18px;

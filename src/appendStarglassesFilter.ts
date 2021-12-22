@@ -1,4 +1,5 @@
 import { genElement } from './utils'
+import { repoCardRefs } from './initRepoCard'
 
 const selectors = ['💢 All'] as string[]
 
@@ -18,11 +19,11 @@ if (selectors.length > 0) {
     </summary>
     <div class="SelectMenu right-0">
       <div class="SelectMenu-modal">
-        ${selectors.map(selector => `<div class="form-checkbox mt-0 mb-0 p-2">
+        ${selectors.map(selector => `<div class="form-checkbox mt-0 mb-0" style="padding: 8px 16px !important;">
           <label class="d-flex">
             <input type="checkbox" class="mx-0 js-user-list-menu-item" style="cursor: pointer;">
             <span class="Truncate ml-2 text-normal f5">
-              <span class="Truncate-text">
+              <span class="Truncate-text" style="user-select: none;">
                 ${ selector }
               </span>
             </span>
@@ -34,8 +35,36 @@ if (selectors.length > 0) {
 
   details.querySelectorAll<HTMLInputElement>('input.mx-0.js-user-list-menu-item').forEach(input => {
     input.addEventListener('change', () => {
-      // const checked = input.checked
-      // const selector = input.parentElement?.querySelector<HTMLSpanElement>('span.Truncate-text')?.innerHTML
+      const checked = input.checked
+      const selector = input.parentElement?.querySelector<HTMLSpanElement>('span.Truncate-text')?.innerHTML.trim()
+      repoCardRefs.forEach(({ form, card }) => {
+        if (!form) return
+        const checkedMap = <Record<string, boolean>>{}
+        form.querySelectorAll<HTMLLabelElement>('label.d-flex').forEach(label => {
+          const currentSelector = label.querySelector<HTMLSpanElement>('span.Truncate-text')?.innerHTML ?? ''
+          checkedMap[currentSelector] = label.querySelector<HTMLInputElement>('input')?.checked ?? false
+        })
+        // if select all
+        if (selector === selectors[0]) {
+          if (checked && Object.values(checkedMap).includes(true))
+            card.style.setProperty('display', 'none', 'important')
+          else
+            card.style.removeProperty('display')
+          return
+        }
+        for (const [key, value] of Object.entries(checkedMap)) {
+          if (key === selector) {
+            if (!value)
+              card.style.removeProperty('display')
+            else {
+              if (!checked)
+                card.style.removeProperty('display')
+              else
+                card.style.setProperty('display', 'none', 'important')
+            }
+          }
+        }
+      })
     })
   })
 

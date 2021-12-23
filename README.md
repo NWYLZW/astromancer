@@ -17,6 +17,7 @@
 * 全新的界面用来管理你的 star repositories
 * starglasses 选项可以让你更快的找到你需要管理的 star repositories
 * 使用拖动操作来管理你的 star repositories
+* 支持俩种展示方式
 
 ![demo](./001.gif)
 

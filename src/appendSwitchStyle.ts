@@ -28,10 +28,8 @@ if (styleSwitchInput) {
 
 styleSwitch.addEventListener('click', () => {
   if (styleSwitchInput) {
-    if (!styleSwitchInput.checked)
-      styleSwitchInput.setAttribute('checked', '')
-    else
-      styleSwitchInput.removeAttribute('checked')
+    styleSwitchInput.checked = !styleSwitchInput.checked
+    styleSwitchInput.toggleAttribute('checked', styleSwitchInput.checked)
   }
 })
 

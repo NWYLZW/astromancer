@@ -90,6 +90,7 @@ export function initRepoCards() {
           const input = div.querySelector<HTMLInputElement>('input.js-user-list-menu-item')
           const label = div.querySelector<HTMLSpanElement>('span.Truncate-text')
           if (label && input && (label.innerText === targetList?.innerText ?? '')) {
+            input.checked = true
             input.toggleAttribute('checked', true)
           }
         })

@@ -27,7 +27,6 @@ document.querySelectorAll<HTMLDivElement>('div.d-flex.flex-row.flex-items-baseli
 })
 
 provide.register('star-list:change', (title, action) => {
-  console.log('star-list:change', title, action)
   starListRefs.filter(({ title: t }) => t === title).forEach(ref => {
     if (action === 'push')
       ref.count++

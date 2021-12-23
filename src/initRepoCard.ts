@@ -5,17 +5,45 @@ export interface RepoCardComp {
   form?: HTMLFormElement
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace provide {
+  export interface Events {
+    'star-list:change': (title: string, action: 'push' | 'remove') => void
+  }
+  const events = <{
+    [k in keyof Events]: Events[k][]
+  }>{}
+  export function register<T extends keyof Events>(name: T, fn: Events[T]) {
+    if (!events[name])
+      events[name] = []
+    events[name].push(fn)
+  }
+  export function emit<T extends keyof Events>(name: T, ...args: Parameters<Events[T]>) {
+    // @ts-ignore
+    events[name].forEach(fn => fn(...args))
+  }
+}
+
 export let curDraggedIndex = -1
 export const repoCardRefs = <RepoCardComp[]>[]
 
-const formObserver = new MutationObserver(async () => {
-  const { form } = repoCardRefs[curDraggedIndex]
-  if (form)
+const inputCheckObserver = new MutationObserver(async ([m]) => {
+  const repo = repoCardRefs[curDraggedIndex]
+  const { form } = repo
+  if (form) {
     await fetch(form.action, {
-      method:'post',
+      method: 'post',
       headers: { accept: 'application/json' },
       body: new FormData(form)
     })
+    const checkedMap = <Record<string, boolean>>{}
+    form.querySelectorAll<HTMLLabelElement>('label.d-flex').forEach(label => {
+      const currentSelector = label.querySelector<HTMLSpanElement>('span.Truncate-text')?.innerHTML ?? ''
+      checkedMap[currentSelector] = label.querySelector<HTMLInputElement>('input')?.checked ?? false
+    })
+    const title = m.target.parentElement?.querySelector<HTMLSpanElement>('span.Truncate-text')?.innerHTML.trim()
+    title && provide.emit('star-list:change', title, checkedMap[title] ? 'push' : 'remove')
+  }
 })
 
 export function initRepoCards() {
@@ -35,7 +63,7 @@ export function initRepoCards() {
               curDraggedIndex = index
               input.toggleAttribute('checked', input.checked)
             })
-            formObserver.observe(input, {
+            inputCheckObserver.observe(input, {
               attributes: true,
               attributeFilter: ['checked']
             })

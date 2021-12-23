@@ -3,7 +3,7 @@ div.col-lg-12 {
   position: relative;
   display: grid;
   padding-top: 98px;
-  grid-template-columns: repeat(2, calc(50% - 10px));
+  grid-template-columns: repeat(1, 100%);
   column-gap: 20px;
   row-gap: 20px;
   > div.position-relative {
@@ -35,11 +35,5 @@ div.col-12.d-block.width-full.py-4.border-bottom.color-border-muted {
     right: 15px;
     padding: 0 10px;
     width: 140px;
-  }
-}
-div.Layout {
-  grid-template-columns: 0 0 calc(100% - var(--Layout-gutter));
-  &-sidebar {
-    display: none;
   }
 }

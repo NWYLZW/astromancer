@@ -1,0 +1,56 @@
+div.switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 64px;
+  height: 24px;
+  cursor: pointer;
+  > input {
+    width: 0;
+    height: 0;
+    &:checked + .slider {
+      background-color: #2196f3;
+      &::before {
+        transform: translateX(16px);
+      }
+    }
+    &:focus + .slider {
+      box-shadow: 0 0 1px #2196f3;
+    }
+  }
+  > span.slider {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 24px;
+    cursor: pointer;
+    background-color: #ccc;
+    transition: 0.4s;
+    &::before {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      content: "";
+      transition: 0.4s;
+    }
+    &.round {
+      border-radius: 24px;
+      &::before {
+        border-radius: 50%;
+      }
+    }
+  }
+}
+div.Layout.multiseriate {
+  grid-template-columns: 0 0 calc(100% - var(--Layout-gutter));
+  div.Layout-sidebar {
+    display: none;
+  }
+  div.col-lg-12 {
+    grid-template-columns: repeat(2, calc(50% - 10px));
+  }
+}

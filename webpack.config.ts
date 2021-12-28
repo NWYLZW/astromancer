@@ -13,7 +13,10 @@ const proConfig = {
 
 export default {
   ...(process.env.NODE_ENV === 'pro' ? proConfig : devConfig),
-  entry: './src/index.ts?matches=https://github.com/*?*tab=stars*&runAt=document_start',
+  entry: {
+    'main': './src/index.ts?matches=https://github.com/*?*tab=stars*&runAt=document_start',
+    'watch': './src/watchGithub.ts?matches=https://github.com/*&runAt=document_start'
+  },
   module: {
     rules: [{
       test: /\.scss$/i,
